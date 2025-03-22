@@ -9,11 +9,16 @@ namespace DotNet
 {
     class Program
     {
+        /// <summary>
+        /// Вход в программу
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
+            //Данные БД
             SqlConnectionStringBuilder strCon = new SqlConnectionStringBuilder()
             {
-                DataSource = @"(localdb)\MAAQLlocalDB",
+                DataSource = @"(localdb)\MSSQLlocalDB",
                 InitialCatalog = "MSSQLTestDemo",
                 IntegratedSecurity = true
             };
@@ -26,10 +31,12 @@ namespace DotNet
             };
 
             sqlConnection.StateChange += (s, e) => 
-            { Console.WriteLine($"{nameof(sqlConnection)} " +
+            { 
+                Console.WriteLine($@"{nameof(sqlConnection)} " +
                 $"в состоянии: {(s as SqlConnection).State}"); 
             };
 
+            //Подключение к БД
             try
             {
                 sqlConnection.Open();

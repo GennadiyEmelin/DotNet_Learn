@@ -13,7 +13,8 @@ namespace DotNet
         /// Подключение к базе данных
         /// Еще доработаю и разобью на несколько методов, пока что все в одном.
         /// </summary>
-        public void ConnectionSQL()
+        public void ConnectionSQL(string id, string name, string workerSurname, 
+            string age, string passport, string idDepartment, string idDirector)
         {
             SqlConnectionStringBuilder strCon = new SqlConnectionStringBuilder()
             {
@@ -39,6 +40,10 @@ namespace DotNet
             try
             {
                 sqlConnection.Open();
+                string sql = $@"INSERT INTO Workers([id],[workerName],[workerSurname],[age],[passport],[idDepartment],[idDirector]) 
+                     values ({id},'{name}','{workerSurname}','{age}','{passport}',{idDepartment},{idDirector})";
+                SqlCommand command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
             }
             catch (Exception e)
             {

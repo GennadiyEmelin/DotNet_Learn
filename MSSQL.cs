@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DotNet
+{
+    internal class MSSQL
+    {
+        /// <summary>
+        /// Подключение к базе данных
+        /// Еще доработаю и разобью на несколько методов, пока что все в одном.
+        /// </summary>
+        public void ConnectionSQL()
+        {
+            SqlConnectionStringBuilder strCon = new SqlConnectionStringBuilder()
+            {
+                DataSource = @"(localdb)\MSSQLlocalDB",
+                InitialCatalog = "MSSQLTestDemo",
+                IntegratedSecurity = true
+            };
+
+            Console.WriteLine(strCon.ConnectionString);
+
+            SqlConnection sqlConnection = new SqlConnection()
+            {
+                ConnectionString = strCon.ConnectionString,
+            };
+
+            sqlConnection.StateChange += (s, e) =>
+            {
+                Console.WriteLine($@"{nameof(sqlConnection)} " +
+                $"в состоянии: {(s as SqlConnection).State}");
+            };
+
+            //Подключение к БД
+            try
+            {
+                sqlConnection.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(sqlConnection.State);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+    }
+}

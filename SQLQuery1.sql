@@ -1,0 +1,1 @@
+﻿INSERT INTO Workers([Id],[workerName],[idDepartment],[idDirector]) VALUES(1,"Gena",1,1)
